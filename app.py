@@ -34,39 +34,37 @@ def home():
 
 @app.route('/estimation', methods=['POST'])
 def estimation():
-    # Get input data from the form
-    distance_to_solar_noon = float(request.form['distance-to-solar-noon'])
-    temperature = float(request.form['temperature'])
-    wind_direction = float(request.form['wind-direction'])
-    wind_speed = float(request.form['wind-speed'])
-    sky_cover = float(request.form['sky-cover'])
-    visibility = float(request.form['visibility'])
-    humidity = float(request.form['humidity'])
-    average_wind_speed = float(request.form['average-wind-speed-(period)'])
-    average_pressure = float(request.form['average-pressure-(period)'])
+    try:
+        # Get input data from the form
+        distance_to_solar_noon = float(request.form['distance-to-solar-noon'])
+        temperature = float(request.form['temperature'])
+        wind_direction = float(request.form['wind-direction'])
+        wind_speed = float(request.form['wind-speed'])
+        sky_cover = float(request.form['sky-cover'])
+        visibility = float(request.form['visibility'])
+        humidity = float(request.form['humidity'])
+        average_wind_speed = float(request.form['average-wind-speed-(period)'])
+        average_pressure = float(request.form['average-pressure-(period)'])
 
-    # Prepare the input data for prediction
-    input_data = np.array([[distance_to_solar_noon, temperature, wind_direction, wind_speed,
-                            sky_cover, visibility, humidity, average_wind_speed, average_pressure]])
+        # Prepare the input data for prediction
+        input_data = np.array([[distance_to_solar_noon, temperature, wind_direction, wind_speed,
+                                sky_cover, visibility, humidity, average_wind_speed, average_pressure]])
 
-    # Make the prediction
-    prediction = gbr_model.predict(input_data)
-    rslt=''
-    if prediction[0] > 0:
-        rslt=(prediction[0].round(3)) + "J"
-    else:
-        rslt='No solar power generation is predicted for the given conditions.'
+        # Make the prediction
+        prediction = gbr_model.predict(input_data)
         
+        # Format the result
+        if prediction[0] > 0:
+            rslt = str(prediction[0].round(3)) + " J"
+        else:
+            rslt = 'No solar power generation is predicted for the given conditions.'
+        
+    except Exception as e:
+        rslt = f"An error occurred: {str(e)}"
 
     # Return the prediction result
     return render_template('estimation.html', prediction=rslt)
 
-#if __name__ == '__main__':
-    #app.run(debug=True)
-
-
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-
-    
