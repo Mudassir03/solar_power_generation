@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar Power Generation Estimator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #E88D67;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40vh;
+        }
+        h1 {
+            color: #006989;
+            font-size: 2em;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .form-group input:focus {
+            border-color: #006989;
+            box-shadow: 0 0 5px rgba(0, 105, 137, 0.5);
+            outline: none;
+        }
+        .form-group input[type="submit"] {
+            background-color: #006989;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .form-group input[type="submit"]:hover {
+            background-color: #004d66;
+        }
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .form-group input {
+                padding: 10px;
+                font-size: 0.9em;
+            }
+            .form-group input[type="submit"] {
+                font-size: 1em;
+                padding: 10px;
+            }
+        }
+        /* Hide the spin buttons on number inputs */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Solar Power Generation Estimator</h1>
+        <form action="{{url_for('estimation')}}" method="post">
+            <div class="form-group">
+                <label for="distance-to-solar-noon">Distance to Solar Noon:</label>
+                <input type="number" id="distance-to-solar-noon" name="distance-to-solar-noon" step="0.000000001" min="0" placeholder="Enter distance to solar noon" required>
+            </div>
+            <div class="form-group">
+                <label for="temperature">Temperature:</label>
+                <input type="number" id="temperature" name="temperature" step="0.000000001" placeholder="Enter temperature" required>
+            </div>
+            <div class="form-group">
+                <label for="wind-direction">Wind Direction:</label>
+                <input type="number" id="wind-direction" name="wind-direction" step="0.000000001" min="0" placeholder="Enter wind direction" required>
+            </div>
+            <div class="form-group">
+                <label for="wind-speed">Wind Speed:</label>
+                <input type="number" id="wind-speed" name="wind-speed" step="0.000000001" min="0" placeholder="Enter wind speed" required>
+            </div>
+            <div class="form-group">
+                <label for="sky-cover">Sky Cover:</label>
+                <input type="number" id="sky-cover" name="sky-cover" step="0.000000001" min="0" placeholder="Enter sky cover percentage" required>
+            </div>
+            <div class="form-group">
+                <label for="visibility">Visibility:</label>
+                <input type="number" id="visibility" name="visibility" step="0.000000001" min="0" placeholder="Enter visibility" required>
+            </div>
+            <div class="form-group">
+                <label for="humidity">Humidity:</label>
+                <input type="number" id="humidity" name="humidity" step="0.000000001" min="0" placeholder="Enter humidity" required>
+            </div>
+            <div class="form-group">
+                <label for="average-wind-speed">Average Wind Speed (Period):</label>
+                <input type="number" id="average-wind-speed" name="average-wind-speed-(period)" step="0.000000001" min="0" placeholder="Enter average wind speed" required>
+            </div>
+            <div class="form-group">
+                <label for="average-pressure">Average Pressure (Period):</label>
+                <input type="number" id="average-pressure" name="average-pressure-(period)" step="0.000000001" min="0" placeholder="Enter average pressure" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Estimate">
+            </div>
+        </form>
+    </div>
+</body>
+</html>
