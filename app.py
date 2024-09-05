@@ -51,9 +51,15 @@ def estimation():
 
     # Make the prediction
     prediction = gbr_model.predict(input_data)
+    rslt=''
+    if prediction[0] > 0:
+        rslt=(prediction[0].round(3)) + "J"
+    else:
+        rslt='No solar power generation is predicted for the given conditions.'
+        
 
     # Return the prediction result
-    return render_template('estimation.html', prediction=prediction[0])
+    return render_template('estimation.html', prediction=rslt)
 
 #if __name__ == '__main__':
     #app.run(debug=True)
